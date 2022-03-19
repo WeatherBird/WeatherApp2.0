@@ -42,6 +42,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "fs": "^0.0.1-security",
     "html-webpack-plugin": "^5.5.0",
