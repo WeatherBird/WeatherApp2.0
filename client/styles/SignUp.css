@@ -1,0 +1,53 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  
+}
+
+#SignupBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  border: 1px black solid;
+  margin-left: 55px;
+}
+
+#usernameInput {
+  border: 2px solid #808080;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 20px;
+}
+
+#passwordInput {
+  border: 2px solid #808080;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 20px;
+}
+
+.signUpButton {
+  background-color: #808080;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  line-height: 2rem;
+  width: 100px;
+  font-weight: bold;
+  margin-left: 55px;
+}
+
+.signUpButton:hover {
+  background-color: #696969;
+}
