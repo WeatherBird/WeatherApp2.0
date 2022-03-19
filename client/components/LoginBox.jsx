@@ -28,7 +28,7 @@ class LoginBox extends Component{
     event.preventDefault();
     // make a post request to server backend /login with username and password in the request body
     const port = 3000 // process.env.NODE_ENV === 'development' ? 3000 : 8080;
-    const url = `http://localhost:${port}/login`;
+    const url = `http://localhost:${port}/user/login`;
     const loginObject = {
       username: event.target.username.value,
       password: event.target.password.value
