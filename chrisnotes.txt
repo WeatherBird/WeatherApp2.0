@@ -1,0 +1,55 @@
+CREATE DATABASE weatherapp
+
+\l 
+
+
+CREATE TABLE users(
+   username_id INT GENERATED ALWAYS AS IDENTITY,
+   username VARCHAR(20) NOT NULL UNIQUE,
+   password VARCHAR(20) NOT NULL,
+   nickname VARCHAR(20) NOT NULL,
+   email VARCHAR(30) NOT NULL,
+   tos VARCHAR NOT NULL,
+   city VARCHAR(30), 
+   state VARCHAR(30),
+   PRIMARY KEY(username_id)
+);
+
+CREATE TABLE favorites(
+   favorite_id INT GENERATED ALWAYS AS IDENTITY,
+   username_id INT,
+   city VARCHAR(30) NOT NULL,
+   state VARCHAR(30) NOT NULL,
+   PRIMARY KEY(favorite_id),
+   CONSTRAINT fk_users
+      FOREIGN KEY(username_id) 
+	  REFERENCES users(username_id)
+);
+
+// create later
+CREATE TABLE friends(
+       friends_id INT GENERATED ALWAYS AS IDENTITY,
+       username_id INT,
+       friend_username_id INT UNIQUE,
+       PRIMARY KEY(friends_id)
+       CONSTRAINT fk_users
+            FOREIGN KEY(username_id)
+            REFERENCES users(username_id)
+       CONSTRAINT fk_users
+            FOREIGN KEY(friend_username_id)
+            REFERENCES users(friend_username_id)
+)
+
+
+\dt
+
+User creation logic:
+city and state must pass get request test and return 200
+
+Favorite creation logic:
+city and state must pass get request test and return 200
+city in relation to user_id should be unique
+
+friend creation logic:
+friends_id in relation to user_id should be unique
+
