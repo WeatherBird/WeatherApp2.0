@@ -1,6 +1,7 @@
 // import in path and express
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 // import in bodyParser and cookieParser
 // const bodyParser = require('body-parser');
 // const cookieParser = require('cookie-parser');
@@ -13,6 +14,7 @@ const PORT = 3000;
 const app = express();
 
 // handle parsing incoming data
+app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
 app.use(express.json());
 app.use(express.urlencoded( { extended: true }));
 
