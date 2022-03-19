@@ -7,6 +7,7 @@
     "start": "node ./server/server.js",
     "test": "echo \"No testing library implemented\" && exit 1",
     "prod": "export NODE_ENV=production; webpack serve",
+    "build": "export NODE_ENV=development; webpack serve",
     "dev": "concurrently \"export NODE_ENV=development; webpack serve\" \"nodemon ./server/server.js\""
   },
   "repository": {
@@ -42,9 +43,12 @@
   },
   "dependencies": {
     "express": "^4.17.3",
+    "fs": "^0.0.1-security",
     "html-webpack-plugin": "^5.5.0",
+    "net": "^1.0.2",
     "node": "^17.7.1",
     "node-fetch": "^3.2.3",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",
     "react": "^17.0.2",
@@ -52,6 +56,10 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
     "redux": "^4.1.2",
-    "redux-thunk": "^2.4.1"
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
+    "stream": "^0.0.2",
+    "util": "^0.12.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }
