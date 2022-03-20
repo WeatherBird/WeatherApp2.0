@@ -62,8 +62,6 @@ userController.verifyUser = async (req, res, next) => {
     console.log('Result: ', result);
     // compare the hashed password stored in the database and our plainTextPassword
     // if the plaintext password and hashedPassword do not match, throw a new syntax error
-    console.log('At 0: ', result[0]);
-    console.log()
     const match = await bcrypt.compare(password, result.rows[0].password);
     // if the passwords are not a match, throw a custom error
     // the catch statement will grab the error thrown and invoke the global error handler
@@ -80,6 +78,63 @@ userController.verifyUser = async (req, res, next) => {
       log: `userController.verifyUser  ERROR: ${err}`,
       message: { err: 'Error occured in userController.verifyUser'}
   })
+  }
+}
+
+
+userController.updateUserLocation = async (req, res, next) => {
+  console.log('WE ARE UPDATING LOCATION');
+  const { username } = req.params;
+  const { city, state } = req.body;
+  try {
+    const queryString =
+    `
+      UPDATE users
+      SET city = $1, state = $2
+      WHERE username = $3
+      RETURNING *
+    `;
+    const params = [ city, state, username ]
+    const result = await db.query(queryString, params);
+    console.log('Result: ', result);
+    // store 
+    res.locals.updatedLocation = result.rows;
+    console.log("res.locals.updatedLocation" + res.locals.updatedLocation)
+    next ();
+}
+  catch (err) {
+      next({
+          log: `userController.updateUserLocation ERROR: ${err}`,
+          message: { err: 'Error occured in userController.updateUserLocation'}
+      })
+  }
+}
+
+
+//how do we automatically populate user?
+userController.addFavorite = async (req, res, next) => {
+  console.log('WE ARE ADDING FAVORITE LOCATION');
+  const { city, state } = req.body;
+  try {
+    const queryString =
+    `
+    INSERT INTO favorites (city, state)
+    VALUES ($1, $2) 
+    RETURNING *;
+    `;
+    const params = [ city, state ]
+    const result = await db.query(queryString, params);
+    console.log('Result: ', result);
+    // store 
+    res.locals.favoriteLocation = result.rows[0];
+    console.log("res.locals.updatedLocation" + res.locals.favoriteLocation)
+    next ();
+}
+  catch (err) {
+      next({
+          log: `userController.favoriteLocation ERROR: ${err}`,
+          message: { err: 'Error occured in userController.favoriteLocation'}
+      })
   }
 }
 
