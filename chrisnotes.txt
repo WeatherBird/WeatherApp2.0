@@ -6,12 +6,13 @@ CREATE DATABASE weatherapp
 CREATE TABLE users(
    username_id INT GENERATED ALWAYS AS IDENTITY,
    username VARCHAR(20) NOT NULL UNIQUE,
-   password VARCHAR(20) NOT NULL,
+   password VARCHAR(75) NOT NULL,
    nickname VARCHAR(20) NOT NULL,
    email VARCHAR(30) NOT NULL,
    tos VARCHAR NOT NULL,
    city VARCHAR(30), 
    state VARCHAR(30),
+   hash VARCHAR(75),
    PRIMARY KEY(username_id)
 );
 

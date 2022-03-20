@@ -13,7 +13,6 @@ userRouter.get('/signup', (req, res) => {
 //Where do we go afterwards?
 userRouter.post('/signup', userController.createUser, (req, res) => {
   // successful - send back a status of 200 and the data from the user table
-  console.log('MADE IT BACK: ', res.locals.newUser);
   res.status(200).json(res.locals.newUser);
 });
 
