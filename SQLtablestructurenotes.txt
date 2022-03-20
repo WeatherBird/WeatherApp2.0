@@ -1,3 +1,5 @@
+psql
+
 CREATE DATABASE weatherapp
 
 \l 
@@ -6,12 +8,14 @@ CREATE DATABASE weatherapp
 CREATE TABLE users(
    username_id INT GENERATED ALWAYS AS IDENTITY,
    username VARCHAR(20) NOT NULL UNIQUE,
-   password VARCHAR(20) NOT NULL,
+   password VARCHAR(75) NOT NULL,
    nickname VARCHAR(20) NOT NULL,
    email VARCHAR(30) NOT NULL,
    tos VARCHAR NOT NULL,
    city VARCHAR(30), 
    state VARCHAR(30),
+   hash VARCHAR(75),
+   cookie VARCHAR(30),
    PRIMARY KEY(username_id)
 );
 
@@ -23,14 +27,16 @@ CREATE TABLE favorites(
    PRIMARY KEY(favorite_id),
    CONSTRAINT fk_users
       FOREIGN KEY(username_id) 
-	  REFERENCES users(username_id)
+	   REFERENCES users(username_id)
+      ON DELETE CASCADE
+      UNIQUE (username_id, city, state)
 );
 
 // create later
 CREATE TABLE friends(
        friends_id INT GENERATED ALWAYS AS IDENTITY,
        username_id INT,
-       friend_username_id INT UNIQUE,
+       friend_username_id INT,
        PRIMARY KEY(friends_id)
        CONSTRAINT fk_users
             FOREIGN KEY(username_id)
@@ -38,6 +44,8 @@ CREATE TABLE friends(
        CONSTRAINT fk_users
             FOREIGN KEY(friend_username_id)
             REFERENCES users(friend_username_id)
+            ON DELETE CASCADE
+       UNIQUE (username_id, friend_username_id)
 )
 
 

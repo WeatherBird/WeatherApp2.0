@@ -13,7 +13,6 @@ userRouter.get('/signup', (req, res) => {
 //Where do we go afterwards?
 userRouter.post('/signup', userController.createUser, (req, res) => {
   // successful - send back a status of 200 and the data from the user table
-  console.log('MADE IT BACK: ', res.locals.newUser);
   res.status(200).json(res.locals.newUser);
 });
 
@@ -29,8 +28,22 @@ userRouter.post('/login', userController.verifyUser, (req, res) => {
 //Where do we go afterwards?
 
 
+//add city and state to userprofile - PUT
+//return status code 200 if successful
+//end point?
+userRouter.post('/location/:username', userController.updateUserLocation, (req, res) => {
+  // successful - send back a status of 200 and the user data from the user table
+  res.status(200).json(res.locals.updatedLocation);
+});
+
 //add favorite to user profile - PUT
 //return status code 200 if successful
+userRouter.post('/favorite', userController.addFavorite, (req, res) => {
+  // successful - send back a status of 200 and the user data from the user table
+  res.status(200).json(res.locals.favoriteLocation);
+});
+
+
 
 //delete favorite to user profile - DELETE
 //return status code 200 if successful
