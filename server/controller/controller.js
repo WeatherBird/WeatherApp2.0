@@ -59,7 +59,7 @@ userController.verifyUser = async (req, res, next) => {
     `;
     const params = [username];
     const result = await db.query(queryString, params);
-    console.log('Result: ', result);
+    // console.log('Result: ', result);
     // compare the hashed password stored in the database and our plainTextPassword
     // if the plaintext password and hashedPassword do not match, throw a new syntax error
     const match = await bcrypt.compare(password, result.rows[0].password);
@@ -128,17 +128,41 @@ userController.addFavorite = async (req, res, next) => {
     // store 
     res.locals.favoriteLocation = result.rows[0];
     console.log("res.locals.updatedLocation" + res.locals.favoriteLocation)
-    next ();
-}
+    next();
+  }
   catch (err) {
-      next({
-          log: `userController.favoriteLocation ERROR: ${err}`,
-          message: { err: 'Error occured in userController.favoriteLocation'}
-      })
+    next({
+      log: `userController.favoriteLocation ERROR: ${err}`,
+      message: { err: 'Error occured in userController.favoriteLocation'}
+    })
   }
 }
 
-
+// userController.deleteFavorite = async (req, res, next) => {
+//   console.log('WE ARE DELETING FAVORITE LOCATION');
+//   const { city, state } = req.body;
+//   try {
+//     const queryString =
+//     `
+//     INSERT INTO favorites (city, state)
+//     VALUES ($1, $2) 
+//     RETURNING *;
+//     `;
+//     const params = [ city, state ]
+//     const result = await db.query(queryString, params);
+//     console.log('Result: ', result);
+//     // store 
+//     res.locals.favoriteLocation = result.rows[0];
+//     console.log("res.locals.updatedLocation" + res.locals.favoriteLocation)
+//     next();
+//   }
+//   catch (err) {
+//     next({
+//       log: `userController.favoriteLocation ERROR: ${err}`,
+//       message: { err: 'Error occured in userController.favoriteLocation'}
+//     })
+//   }
+// }
 //
 
 

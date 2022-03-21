@@ -1,5 +1,6 @@
 import React, { Component, useEffect } from 'react';
 
+
 export const apiCall = (city, state, country, dispatchSearchLocation) => {
     fetch(`http://api.airvisual.com/v2/city?city=${city}&state=${state}&country=${country}&key=${process.env.API_KEY}`)
     .then(data => data.json())
@@ -17,16 +18,17 @@ const SearchBar = (props) => {
         // console.log('city: ', city)
         let state = document.getElementById("state").value
         // console.log('state: ', state)
-        let country = document.getElementById("country").value
+        let country = 'USA'
         apiCall(city, state, country, props.dispatchSearchLocation)
     }
 
     return (
         <div id='dashboard'>
-            <input id='city' type='text' />
-            <input id='state' type='text' />
-            <input id='country' type='text'  />
-            <button onClick={clickSearch}>Search</button>
+            <label>Search a location: </label>
+            <input className='currentWeather' id='city' type='text' placeholder='city' />
+            <input className='currentWeather' id='state' type='text' placeholder='state'/>
+            {/* <input id='country' type='text' /> */}
+            <button className="searchBtn" onClick={clickSearch}>Search</button>
         </div>
     )
 }

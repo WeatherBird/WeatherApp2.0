@@ -10,9 +10,8 @@ import SearchBar from './components/SearchBar';
 const Login = () => {
   return (
     <div id='loginPage'>
-      <h1>This is Login</h1>
+      {/* <h1>This is Login</h1> */}
       <LoginBox />
-      <SearchBar/>
     </div>
   )
 };

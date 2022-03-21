@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+
 * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Shrikhand', cursive;
+}
+
+#loginPage {
+    background: rgb(255, 255, 238);
+    background: linear-gradient(0deg, rgb(255, 255, 243) 0%, rgb(126, 157, 243) 88%);
 }
 
 #LoginBox {
@@ -12,22 +19,22 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-    border: 1px black solid;
+    /* border: 1px black solid; */
 }
 
-#usernameInput {
-    border: 2px solid #808080;
+#loginUsernameInput {
+    border: 2px solid #ffffff;
+    color: #4189F2;
     border-radius: 5px;
-    text-align: center;
     line-height: 2rem;
     font-size: 20px;
     margin-bottom: 20px;
 }
 
-#passwordInput {
-    border: 2px solid #808080;
+#loginPasswordInput {
+    border: 2px solid #ffffff;
+    color: #4189F2;
     border-radius: 5px;
-    text-align: center;
     line-height: 2rem;
     font-size: 20px;
     margin-bottom: 20px;
@@ -41,18 +48,63 @@
     line-height: 2rem;
     width: 100px;
     font-weight: bold;
-
+    margin-top: 15px;
 }
 
-.loginButton {
+.loginPageButton {
     background-color: #808080;
-    color: white;
+    color: #4189F2;
     border-radius: 12px;
     border: none;
     line-height: 2rem;
     width: 100px;
-    font-weight: bold;
-
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+    background: white;
+    /* border: 1px solid #4189F2; */
+    transition-duration: .3s;
 }
 
+.loginPageButton:hover {
+    background: #4189F2;
+    color: white;
+}
 
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 100px;
+}
+
+.input {
+    margin-bottom: 10px;
+}
+
+#dashboard {
+    margin-bottom: 10px;
+}
+
+#loginHeader {
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px #4189F2;
+}
+
+::placeholder {
+    color: #b6d0f8;
+}
+
+/* input[type=text] {
+    border: 2px solid red;
+    border-radius: 4px;
+} */
+
+/* input {
+    border: 2px solid red;
+    border-style: solid;
+    border-width: 1px;
+  } */
+  

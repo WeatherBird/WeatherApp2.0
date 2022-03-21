@@ -1,13 +1,3 @@
-/**
- * ************************************
- *
- * @module  Login.js
- * @author  David Kim
- * @date    3/19/2022
- * @description presentation component that renders a single box with log-in forms
- *
- * ************************************
- */
 import React, { Component } from 'react';
 import SignUp from '../SignUp';
 import { Link, Navigate } from 'react-router-dom'
@@ -27,7 +17,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class LoginBox extends Component {
-
 
   constructor(props) {
     super(props);
@@ -63,19 +52,24 @@ class LoginBox extends Component {
         return response.json();
       })
       .then((data) => {
-        //server should send user profile info
-        //access primary location key 
-        //make api call with location key 
-        //use returned data to set state
-
-        //after post request is sent, db will respond with posted data
+        console.log(data);
         if (fetchStatus === 200) {
           console.log('login successful');
-          this.setState({ ...this.state, loggedIn: true })
-          //store username in state
-          data.users={username: 'abc123'}
-          this.props.dispatchUsernameStorage(data.users.username)
-          apiCall(data.users.city, data.users.state, data.users.country, this.props.dispatchSearchLocation)
+          this.setState({ ...this.state, loggedIn: true });
+          // store username in state
+          // data.users.username
+          this.props.dispatchUsernameStorage({userId: data.username_id, nickname: data.nickname});
+          // defaulting country to usa
+          // the api call below should ideally use the user's IP address to find their nearest location
+          // if (data.city !== null) apiCall(data.city, data.state, 'USA', this.props.dispatchSearchLocation);
+          fetch(`http://api.airvisual.com/v2/nearest_city?key=${process.env.API_KEY}`)
+            .then(data => data.json())
+            .then((data) => {
+              console.log('data: ', data);
+              // searchForLocation(data)
+              this.props.dispatchSearchLocation(data);
+            })
+            .catch(error => console.log('error in api get request: ', error));
         }
         else alert('Login error');
       });
@@ -97,29 +91,23 @@ class LoginBox extends Component {
     console.log('loggedIn: ', this.state.loggedIn)
     return this.state.loggedIn ? <Navigate to="/dashboard" /> : (
       <div id="LoginBox">
+        <h1 id='loginHeader'>Breathe Better Air™</h1>
         <form id="loginForm" onSubmit={this.onSubmit}>
           <div className="inputContainer">
-            <span>Username: </span> <input name="username" id="usernameInput" type="text"></input>
+            {/* <span>Username: </span>  */}
+            <input name="username" id="loginUsernameInput" type="text" placeholder=' username'></input>
           </div>
 
           <div className="inputContainer">
-            <span>Password: </span> <input name="password" id="passwordInput" type="password"></input>
+            {/* <span>Password: </span>  */}
+            <input name="password" id="loginPasswordInput" type="password" placeholder=' password'></input>
           </div>
+          <div className='buttonContainer'> 
+            <button className="loginPageButton" type="submit" >Log In</button>
 
-          <button className='loginButton' type="submit" >Log In</button>
+            <Link className="loginPageButton" to={'/signup'}>Sign Up</Link>
+          </div>
         </form>
-
-        <Link style={{
-          backgroundColor: '#808080',
-          color: 'white',
-          borderRadius: '12px',
-          border: 'none',
-          lineHeight: '2rem',
-          width: '100px',
-          fontWeight: 'bold'
-        }} to={'/signup'}>Sign Up
-        </Link>
-
       </div>
     )
 
