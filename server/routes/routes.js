@@ -20,6 +20,7 @@ userRouter.post('/signup', userController.createUser, (req, res) => {
 // verify user utilizing login - POST
 userRouter.post('/login', userController.verifyUser, (req, res) => {
   // successful - send back a status of 200 and the user data from the user table
+  console.log('logging in')
   res.status(200).json(res.locals.foundUser);
 });
 

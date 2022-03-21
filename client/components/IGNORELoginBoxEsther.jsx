@@ -13,16 +13,15 @@ import { useNavigate } from 'react-router-dom';
 import SignUp from '../SignUp';
 import { Link } from 'react-router-dom'
 
+const LoginBox = () => {
+  const [state, setState] = useState(0) //state starts at 0, call setState with 1 and the component with re-render
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-class LoginBox extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {username: '', password: ''};
-    this.onSubmit = this.onSubmit.bind(this);
-    // this.sendToSignUp = this.sendToSignUp.bind(this);
-  }
+  const navigate = useNavigate()
 
-  onSubmit(event){
+  const onSubmit = (event) => {
+    console.log('button clicked')
     event.preventDefault();
     // make a post request to server backend /login with username and password in the request body
     const port = 3000 // process.env.NODE_ENV === 'development' ? 3000 : 8080;
@@ -48,24 +47,16 @@ class LoginBox extends Component{
       return response.json();
     })
     .then((data) => {
-      if (fetchStatus === 200) console.log('login successful');
+      console.log('logged in')
+      if (fetchStatus === 200) {
+        console.log('login successful');
+        navigate('/dashboard')
+      }
       else alert('Login error');
     });
   }
 
-  // sendToSignUp(event) {
-  //   // handle routing here
-  //   event.preventDefault();
-  //   let navigate = useNavigate(); 
-  //   const routeChange = () =>{ 
-  //     let path = '/signup'; 
-  //     navigate(path);
-  //   }
-  //   routeChange();
-  // }
-
-  render(){
-    return (
+  return (
       <div id="LoginBox">
         <form id="loginForm" >
           <div className="inputContainer">
@@ -76,7 +67,7 @@ class LoginBox extends Component{
           <span>Password: </span> <input name="password" id="passwordInput" type="password"></input>
           </div>
        
-          <button className='loginButton' type="submit" onSubmit={this.onSubmit}>Log In</button>
+          <button className='loginButton' type="submit" onClick={onSubmit}>look</button>
         </form>
 
         <form id="signupRequest" >
@@ -91,7 +82,6 @@ class LoginBox extends Component{
         </form>
       </div>
     )
-  };
 };
 
 // const buttonStyle = {

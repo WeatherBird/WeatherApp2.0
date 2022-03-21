@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './Login.js'
 import SignUp from './SignUp.js'
 import weatherApp from './App.js'
+import Dashboard from './Dashboard.js';
 
 // check cookie exists here 
 // http://localhost:8080 vs http://localhost:8080/login
@@ -47,6 +48,7 @@ export default function App() {
         <Routes>
           <Route path ='/' element={<Login />}/>
           <Route path ='/signup' element={<SignUp />}/>
+          <Route path ='/dashboard' element={<Dashboard />}/>
         </Routes>
       </BrowserRouter>
     </div>
