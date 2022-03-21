@@ -14,3 +14,8 @@ export const searchForLocation = weatherData => ({
   type: types.SEARCH_LOCATION,
   payload: weatherData
 })
+
+export const storeUserData = username => ({
+  type: types.STORE_USERNAME, 
+  paylod: username
+})

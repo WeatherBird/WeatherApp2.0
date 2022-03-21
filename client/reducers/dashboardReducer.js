@@ -1,6 +1,10 @@
 import * as types from '../constants/actionTypes';
 
 const initialState = {
+    username: '',
+    city: '', 
+    state: '', 
+    country: '',
     currentTemp: '', 
     currentAQI: '', 
     currentWindSpeed: '',
@@ -24,17 +28,35 @@ const dashboardReducer = (state = initialState, action) => {
     let favorites;
     switch (action.type) {
         case types.SEARCH_LOCATION: {
-            const temp = payload.data.current.aqius
-            const airQ = payload.data.current.tp
-            const wind = payload.data.current.ws
+            console.log('hit reducer')
+            const city = action.payload.data.city
+            const state = action.payload.data.state
+            const country = action.payload.data.country
+            const temp = action.payload.data.current.weather.tp
+            const airQ = action.payload.data.current.pollution.aqius
+            const wind = action.payload.data.current.weather.ws
         
-        return {
+        const newObj = {
             ...state,
+            city, 
+            state, 
+            country,        
             currentTemp: temp, 
             currentAQI: airQ, 
             currentWindSpeed: wind
             }
+        
+        console.log('updated state: ', newObj)
+        return newObj
+        }
 
+        case types.STORE_USERNAME: {
+            const username = action.payload
+
+            return {
+                ...state,
+                username
+            }
         }
 
         default: {
