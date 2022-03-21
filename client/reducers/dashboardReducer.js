@@ -37,7 +37,7 @@ const dashboardReducer = (state = initialState, action) => {
             const airQ = action.payload.data.current.pollution.aqius
             const wind = action.payload.data.current.weather.ws
         
-        const newObj = {
+        const newState = {
             ...state,
             city, 
             stateName, 
@@ -47,8 +47,8 @@ const dashboardReducer = (state = initialState, action) => {
             currentWindSpeed: wind
             }
         
-        console.log('updated state: ', newObj)
-        return newObj
+        console.log('updated state: ', newState)
+        return newState
         }
 
         case types.STORE_USERINFO: {
@@ -63,7 +63,50 @@ const dashboardReducer = (state = initialState, action) => {
         }
 
         case types.ADD_FAVORITE: {
+            const favoriteId = action.payload.data.favorite_id;
+            const favoriteCity = action.payload.data.city;
+            const favoriteStateName = action.payload.data.state;
+            const favoriteCountry = action.payload.data.country;
+            const favoriteTemp = action.payload.data.current.weather.tp;
+            const favoriteAirQ = action.payload.data.current.pollution.aqius;
+            const favoriteWind = action.payload.data.current.weather.ws;
+
+            const favObj = {
+                id: favoriteId,
+                city: favoriteCity, 
+                stateName: favoriteStateName, 
+                country: favoriteCountry,
+                currentTemp: favoriteTemp, 
+                currentAQI: favoriteAirQ, 
+                currentWindSpeed: favoriteWind};
+
+            const newState = {
+                ...state,
+                favorites: state.favorites.concat(favObj)
+                };
             
+            console.log('updated state: ', newState);
+            return newState;
+        }
+
+        case types.DELETE_FAVORITE: {
+			// take the current favorties array
+            
+            // initialize a new empty array to be the next favorites array state
+            const newArray = [];
+            // iterate over the current fav array and push it to the next favorites array only if id !== deleted_id
+            for (let i = 0; i < state.favorites.length; i++) {
+                // each favorite is an object
+                if (state.favorites[i].id !== action.payload) {
+                    newArray.push(state.favorites[i]);
+                }
+            }
+            // set state with new favorites array 
+            const newState = {
+                ...state,
+                favorites: newArray
+            };
+            return newState;
         }
 
         default: {

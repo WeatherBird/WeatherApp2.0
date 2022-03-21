@@ -1,0 +1,9 @@
+#currentweather {
+  margin-top: 30px;
+  display: flex;
+  margin-left: 5px;
+}
+
+.weatherlist {
+  margin-bottom: 10px;
+}

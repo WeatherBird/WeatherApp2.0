@@ -67,6 +67,7 @@ class LoginBox extends Component {
             .then((data) => {
               console.log('data: ', data);
               // searchForLocation(data)
+              // save the favorites list of this user returned from the backend on a successful login
               this.props.dispatchSearchLocation(data);
             })
             .catch(error => console.log('error in api get request: ', error));
@@ -95,12 +96,12 @@ class LoginBox extends Component {
         <form id="loginForm" onSubmit={this.onSubmit}>
           <div className="inputContainer">
             {/* <span>Username: </span>  */}
-            <input name="username" id="loginUsernameInput" type="text" placeholder=' username'></input>
+            <input name="username" id="loginUsernameInput" type="text" placeholder='username'></input>
           </div>
 
           <div className="inputContainer">
             {/* <span>Password: </span>  */}
-            <input name="password" id="loginPasswordInput" type="password" placeholder=' password'></input>
+            <input name="password" id="loginPasswordInput" type="password" placeholder='password'></input>
           </div>
           <div className='buttonContainer'> 
             <button className="loginPageButton" type="submit" >Log In</button>
