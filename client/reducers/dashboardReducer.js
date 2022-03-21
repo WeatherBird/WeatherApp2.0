@@ -1,9 +1,10 @@
 import * as types from '../constants/actionTypes';
 
 const initialState = {
-    username: '',
+    userId: '',
+    nickname: '',
     city: '', 
-    state: '', 
+    stateName: '', 
     country: '',
     currentTemp: '', 
     currentAQI: '', 
@@ -30,7 +31,7 @@ const dashboardReducer = (state = initialState, action) => {
         case types.SEARCH_LOCATION: {
             console.log('hit reducer')
             const city = action.payload.data.city
-            const state = action.payload.data.state
+            const stateName = action.payload.data.state
             const country = action.payload.data.country
             const temp = action.payload.data.current.weather.tp
             const airQ = action.payload.data.current.pollution.aqius
@@ -39,8 +40,8 @@ const dashboardReducer = (state = initialState, action) => {
         const newObj = {
             ...state,
             city, 
-            state, 
-            country,        
+            stateName, 
+            country,
             currentTemp: temp, 
             currentAQI: airQ, 
             currentWindSpeed: wind
@@ -50,13 +51,19 @@ const dashboardReducer = (state = initialState, action) => {
         return newObj
         }
 
-        case types.STORE_USERNAME: {
-            const username = action.payload
+        case types.STORE_USERINFO: {
+            console.log('Payload: ', action.payload);
+            const {userId, nickname } = action.payload;
 
             return {
                 ...state,
-                username
+                userId,
+                nickname
             }
+        }
+
+        case types.ADD_FAVORITE: {
+            
         }
 
         default: {

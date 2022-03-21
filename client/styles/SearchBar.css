@@ -1,0 +1,17 @@
+#dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+
+.searchBtn {
+  background-color: #808080;
+  color: white;
+  border-radius: 12px;
+  border: none;
+  line-height: 2rem;
+  width: 100px;
+  font-weight: bold;
+}

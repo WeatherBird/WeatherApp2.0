@@ -10,7 +10,20 @@ const CurrentWeather = (props) => {
                 username: props.username,
                 city: props.city,
                 state: props.state,
-                country: props.country
+            })
+        })
+        .then(data => data.json())
+        // .then(data => console.log(data))
+        .catch(error => console.log('error: ', error))
+    }
+
+    const addToFavorites = () => {
+        fetch('/server', {
+            method: 'POST',
+            body: JSON.stringify({
+                userId: props.username_id,
+                city: props.city,
+                state: props.state,
             })
         })
         .then(data => data.json())
@@ -24,13 +37,15 @@ const CurrentWeather = (props) => {
         <div id='currentweather'>
             Today's Forecast:
             <ol>
-                <li>Temperature: {props.currentTemp} </li>
-                <li>AQI: {props.currentAQI}</li> 
-                <li>WindSpeed: {props.currentWindSpeed}</li>        
+                <li>Temperature: {`${(props.currentTemp * 9/5) + 32} °F`} </li>
+                <li>Air Quality Index: {props.currentAQI}</li> 
+                <li>Wind Speed: {`${props.currentWindSpeed} m/s`}</li>        
             </ol>
             <button id='setlocation' onClick={primaryLocation}>Set Primary Location</button>
+            <button id='setFavorite' onClick={addToFavorites}>Add To Favorites</button>
+
         </div>
     )
 }
 
-export default CurrentWeather
+export default CurrentWeather;
