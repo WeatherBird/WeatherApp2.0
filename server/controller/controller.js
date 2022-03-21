@@ -53,15 +53,21 @@ userController.verifyUser = async (req, res, next) => {
     const queryString =
     `
     SELECT 
-    username_id, username, password, nickname, email, tos, city, state
-    FROM users
+    users.username_id, users.username, users.password, users.nickname, users.email, users.tos, users.city, users.state,
+    favorites.city, favorites.state
+    FROM favorites 
+    INNER JOIN users
+    ON favorites.username_id = users.username_id
     WHERE username = $1;
     `;
+
     const params = [username];
     const result = await db.query(queryString, params);
     // console.log('Result: ', result);
     // compare the hashed password stored in the database and our plainTextPassword
     // if the plaintext password and hashedPassword do not match, throw a new syntax error
+    console.log('Results: ', result);
+    console.log('Rows: ', result.rows)
     const match = await bcrypt.compare(password, result.rows[0].password);
     // if the passwords are not a match, throw a custom error
     // the catch statement will grab the error thrown and invoke the global error handler
@@ -69,7 +75,10 @@ userController.verifyUser = async (req, res, next) => {
       throw new SyntaxError('Incorrect Password, Please Try Again');
     } 
     // add the found login user row to the res.locals object
-    res.locals.foundUser = result.rows[0];
+    // const newRows = result.rows.reduce((acc, cur) => {
+      
+    // }, []);
+    res.locals.foundUser = result.rows;
     // invoke next to enter the next middleware function
     next();
   }
@@ -112,27 +121,59 @@ userController.updateUserLocation = async (req, res, next) => {
 
 
 //how do we automatically populate user?
+// insert new favorite into favorites table - associated 
 userController.addFavorite = async (req, res, next) => {
   console.log('WE ARE ADDING FAVORITE LOCATION');
+  const { userId } = req.params;
   const { city, state } = req.body;
   try {
     const queryString =
     `
-    INSERT INTO favorites (city, state)
-    VALUES ($1, $2) 
-    RETURNING *;
+    INSERT INTO favorites (city, state, username_id)
+    VALUES ($1, $2, $3);
     `;
-    const params = [ city, state ]
+
+    // WHERE username_id = $3;
+
+    const params = [ city, state, userId ]
     const result = await db.query(queryString, params);
-    console.log('Result: ', result);
-    // store 
-    res.locals.favoriteLocation = result.rows[0];
-    console.log("res.locals.updatedLocation" + res.locals.favoriteLocation)
+    // console.log('Result: ', result);
+    // // store 
+    // console.log(result.rows);
+    // res.locals.favoriteLocation = result.rows[0];
+    // console.log("res.locals.updatedLocation" + res.locals.favoriteLocation)
     next();
   }
   catch (err) {
     next({
       log: `userController.favoriteLocation ERROR: ${err}`,
+      message: { err: 'Error occured in userController.favoriteLocation'}
+    })
+  }
+}
+
+// returning the favorites list associated with a user after inserting a new favorite
+userController.returnFavorite = async (req, res, next) => {
+  console.log('WE ARE RETURNING THE FAVORITES!');
+  const { userId } = req.params;
+  try {
+    const queryString =
+    `
+    SELECT * FROM favorites
+    WHERE username_id = $1
+    `;
+    
+    const params = [ userId ]
+    const result = await db.query(queryString, params);
+
+    console.log('Resulut: ', result);
+    res.locals.favorites = result.rows;
+
+    next();
+  }
+  catch (err) {
+    next({
+      log: `userController.returnFavorites ERROR: ${err}`,
       message: { err: 'Error occured in userController.favoriteLocation'}
     })
   }
@@ -168,3 +209,40 @@ userController.addFavorite = async (req, res, next) => {
 
 // export the userController - controller methods will be properties on the userController object
 module.exports = userController;
+
+
+
+// userController.verifyUser = async (req, res, next) => {
+//   const { username, password } = req.body;
+//   console.log('WE IN HERE - VERIFYIN');
+//   try {
+//     const queryString =
+//     `
+//     SELECT 
+//     username_id, username, password, nickname, email, tos, city, state
+//     FROM users
+//     WHERE username = $1;
+//     `;
+//     const params = [username];
+//     const result = await db.query(queryString, params);
+//     // console.log('Result: ', result);
+//     // compare the hashed password stored in the database and our plainTextPassword
+//     // if the plaintext password and hashedPassword do not match, throw a new syntax error
+//     const match = await bcrypt.compare(password, result.rows[0].password);
+//     // if the passwords are not a match, throw a custom error
+//     // the catch statement will grab the error thrown and invoke the global error handler
+//     if (!match) {
+//       throw new SyntaxError('Incorrect Password, Please Try Again');
+//     } 
+//     // add the found login user row to the res.locals object
+//     res.locals.foundUser = result.rows[0];
+//     // invoke next to enter the next middleware function
+//     next();
+//   }
+//   catch (err) {
+//     next({
+//       log: `userController.verifyUser  ERROR: ${err}`,
+//       message: { err: 'Error occured in userController.verifyUser'}
+//   })
+//   }
+// }

@@ -39,9 +39,9 @@ userRouter.post('/location/:username', userController.updateUserLocation, (req, 
 
 //add favorite to user profile - PUT
 //return status code 200 if successful
-userRouter.post('/favorite', userController.addFavorite, (req, res) => {
+userRouter.post('/favorites/:userId', userController.addFavorite, userController.returnFavorite, (req, res) => {
   // successful - send back a status of 200 and the user data from the user table
-  res.status(200).json(res.locals.favoriteLocation);
+  res.status(200).json(res.locals.favorites);
 });
 
 

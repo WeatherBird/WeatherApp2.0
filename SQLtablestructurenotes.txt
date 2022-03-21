@@ -28,7 +28,7 @@ CREATE TABLE favorites(
    CONSTRAINT fk_users
       FOREIGN KEY(username_id) 
 	   REFERENCES users(username_id)
-      ON DELETE CASCADE
+      ON DELETE CASCADE,
       UNIQUE (username_id, city, state)
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE friends(
        CONSTRAINT fk_users
             FOREIGN KEY(friend_username_id)
             REFERENCES users(friend_username_id)
-            ON DELETE CASCADE
+            ON DELETE CASCADE,
        UNIQUE (username_id, friend_username_id)
 )
 
