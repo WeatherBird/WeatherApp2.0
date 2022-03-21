@@ -19,3 +19,10 @@ export const storeUserData = userData => ({
   type: types.STORE_USERINFO, 
   payload: userData
 })
+
+
+export const deleteFavorite = locationId => ({
+  type: types.DELETE_FAVORITE, 
+  payload: locationId
+})
+

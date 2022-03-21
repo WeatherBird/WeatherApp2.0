@@ -29,6 +29,7 @@
     line-height: 2rem;
     font-size: 20px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 #loginPasswordInput {
@@ -38,6 +39,7 @@
     line-height: 2rem;
     font-size: 20px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .signUpButton {

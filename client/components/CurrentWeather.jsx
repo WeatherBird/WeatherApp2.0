@@ -1,22 +1,14 @@
 import React from 'react';
+import '../styles/CurrentWeather.css';
 
-const CurrentWeather = (props) => {
-
-    const primaryLocation = () => {
-        console.log('hit primarylocation onclick func')
-        fetch('/server', {
-            method: 'POST',
-            body: JSON.stringify({
-                username: props.username,
-                city: props.city,
-                state: props.state,
-            })
-        })
-        .then(data => data.json())
-        // .then(data => console.log(data))
-        .catch(error => console.log('error: ', error))
+const mapDispatchToProps = dispatch => ({
+    // create functions that will dispatch action creators
+    dispatchAddFavorite: (location) => {
+      dispatch(actions.addFavorite(location));
     }
-
+});
+  
+const CurrentWeather = (props) => {
     const addToFavorites = () => {
         fetch('/server', {
             method: 'POST',
@@ -27,7 +19,12 @@ const CurrentWeather = (props) => {
             })
         })
         .then(data => data.json())
-        // .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            //invoke dispatch here
+            props.dispatchAddFavorite(data)
+            apiCall()
+        })
         .catch(error => console.log('error: ', error))
     }
     
@@ -35,15 +32,13 @@ const CurrentWeather = (props) => {
     return (
         !props.currentTemp ? null : 
         <div id='currentweather'>
-            Today's Forecast:
             <ol>
-                <li>Temperature: {`${(props.currentTemp * 9/5) + 32} °F`} </li>
-                <li>Air Quality Index: {props.currentAQI}</li> 
-                <li>Wind Speed: {`${props.currentWindSpeed} m/s`}</li>        
+                <li className="weatherlist">City: {`${props.city}`} </li> 
+                <li className="weatherlist">Temperature: {`${(props.currentTemp * 9/5) + 32} °F`} </li>
+                <li className="weatherlist">Air Quality Index: {props.currentAQI}</li> 
+                <li className="weatherlist">Wind Speed: {`${props.currentWindSpeed} m/s`}</li>        
             </ol>
-            <button id='setlocation' onClick={primaryLocation}>Set Primary Location</button>
-            <button id='setFavorite' onClick={addToFavorites}>Add To Favorites</button>
-
+            {/* <Favorites favoritesTemp={}/> */}
         </div>
     )
 }

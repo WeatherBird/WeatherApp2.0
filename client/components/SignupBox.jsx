@@ -46,11 +46,6 @@ class SignupBox extends Component{
         else alert('Sign-up error!');
         return;
       } else alert('Sign-up successful');
-      // handle response
-      // console.log(data);
-      this.getUsers();
-      // const myHookValue = this.props.myHookValue;
-      // return <div>{myHookValue}</div>;
     });
   }
 
@@ -59,13 +54,14 @@ class SignupBox extends Component{
       <div id="SignupBox">
         <form id="signupForm" onSubmit={this.onSubmit}>
             <div id='signUpContainer'>
+            <label className='signUpText'>Create An Account</label>
             <input className="input signUpInput inputFields" name="username" id="usernameInput" type="text" placeholder='username'></input>
             <input className="input signUpInput inputFields" name="password" id="passwordInput" type="password" placeholder='password'></input>
             <input className="input signUpInput inputFields" name="nickname" id="nicknameInput" type="text" placeholder='nickname'></input>
             <input className="input signUpInput inputFields" name="email" id="emailInput" type="email" placeholder='email'></input>
             <input type="checkbox" id="tos" name="tos" defaultChecked={ this.props.checked } />
-            <label htmlFor="tos">I agree to the <a href='https://en.wikipedia.org/wiki/Terms_of_service' target="_blank">terms of service</a></label>
-            <button className='loginButton' type="submit">Sign up</button>
+            <label className='signUpText' htmlFor="tos">I agree to the <a id='tos' href='https://en.wikipedia.org/wiki/Terms_of_service' target="_blank">terms of service</a></label>
+            <button className='returnBlurb' type="submit">Sign up</button>
             </div>
         </form>
       </div>
