@@ -109,6 +109,30 @@ const dashboardReducer = (state = initialState, action) => {
             return newState;
         }
 
+        case types.UPDATE_FAVORITES: {
+            const userFavorites = action.payload;
+
+            return {
+                ...state, 
+                favorites: userFavorites
+            }
+        }
+		
+        case types.API_FAVORITES: {
+            const apiData = action.payload;
+
+            const newFavorites = JSON.parse(JSON.stringify(state.favorites));
+
+            newFavorites[apiData.index].currentTemp = apiData.temp;// currentAQI currentWindSpeed
+            newFavorites[apiData.index].currentAQI = apiData.aqi;
+			newFavorites[apiData.index].currentWindSpeed = apiData.wind;
+            
+            return {
+                ...state,
+                favorites: newFavorites
+            }
+        }
+
         default: {
             return state;
           }

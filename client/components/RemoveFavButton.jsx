@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'redux';
+import {connect} from 'react-redux';
 
 // we also need to make sure that if we get a 200: OK response for deleting a favorite place from the server
 // that we go ahead and remove from the state.favorites array the city with the corresponding id 
@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
 const RemoveFavButton = (props) => {
   // props.removeId <- this holds the id to remove
   // props.userId <- this holds the current user's id
-  removeObj = {userId: props.userId, favoritesId: props.removeId};
+  const removeObj = {username_id: props.userId, favorite_id: props.removeId};
   const removeFavorite = (event) => {
     fetch('/server', {
       method: 'DELETE', 

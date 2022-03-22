@@ -44,6 +44,15 @@ userRouter.post('/favorites/:userId', userController.addFavorite, userController
   res.status(200).json(res.locals.favorites);
 });
 
+// get request to a userId paramater - returns the list of favorites associated with the current user
+userRouter.get('/favorites/:userId', userController.returnFavorite, (req, res) => {
+  res.status(200).json(res.locals.favorites);
+});
+
+// post request to delete a row based on a userId and city and state
+userRouter.delete('/favorites', userController.deleteUser, userController.returnFavorite, (req, res) => {
+  res.status(200).json(res.locals.favorites);
+});
 
 
 //delete favorite to user profile - DELETE
