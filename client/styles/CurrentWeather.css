@@ -1,7 +1,23 @@
+/* body {
+  background: linear-gradient(0deg, rgb(255, 255, 243) 0%, rgb(126, 157, 243) 88%);
+} */
+
+.city {
+  font-size: 25px;
+  text-decoration: underline;
+}
+
+ol {
+  list-style: none;
+}
+
 #currentweather {
   margin-top: 30px;
   display: flex;
-  margin-left: 5px;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
 }
 
 .weatherlist {

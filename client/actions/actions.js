@@ -26,3 +26,12 @@ export const deleteFavorite = locationId => ({
   payload: locationId
 })
 
+export const updateFavorites = locationsArray => ({
+  type: types.UPDATE_FAVORITES,
+  payload: locationsArray
+})
+
+export const apiAppendFavs = apiData => ({
+  type: types.API_FAVORITES,
+  payload: apiData
+})

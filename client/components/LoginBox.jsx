@@ -12,7 +12,15 @@ const mapDispatchToProps = dispatch => ({
   },
 
   dispatchUsernameStorage: (username) => {
-    dispatch(actions.storeUserData(username))
+    dispatch(actions.storeUserData(username));
+  }, 
+  
+  dispatchAddFavorite: (location) => {
+    dispatch(actions.addFavorite(location));
+  },
+
+  dispatchUpdateFavorites: (locationsArray) => {
+    dispatch(actions.updateFavorites(locationsArray));
   }
 });
 
@@ -52,13 +60,27 @@ class LoginBox extends Component {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        console.log('data: ', data);
         if (fetchStatus === 200) {
           console.log('login successful');
           this.setState({ ...this.state, loggedIn: true });
           // store username in state
           // data.users.username
           this.props.dispatchUsernameStorage({userId: data.username_id, nickname: data.nickname});
+
+          // save returned favorite places array to state
+          fetch(`/user/favorites/${data.username_id}`)
+          .then( response => {
+            const status = response.status;
+            return response.json();
+          })
+          .then( data => {
+            this.props.dispatchUpdateFavorites(data);
+            console.log('Favorites data: ', data);
+            // save array of favorite places to state at state.favorites
+            
+          });
+
           // defaulting country to usa
           // the api call below should ideally use the user's IP address to find their nearest location
           // if (data.city !== null) apiCall(data.city, data.state, 'USA', this.props.dispatchSearchLocation);

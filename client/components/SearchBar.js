@@ -1,7 +1,8 @@
 import React, { Component, useEffect } from 'react';
+import '../styles/SearchBar.css';
 
 
-export const apiCall = (city, state, country, dispatchSearchLocation) => {
+const apiCall = (city, state, country, dispatchSearchLocation) => {
     fetch(`http://api.airvisual.com/v2/city?city=${city}&state=${state}&country=${country}&key=${process.env.API_KEY}`)
     .then(data => data.json())
     .then((data) => {
