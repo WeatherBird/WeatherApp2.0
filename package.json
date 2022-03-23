@@ -8,7 +8,7 @@
     "test": "jest",
     "prod": "export NODE_ENV=production; webpack serve",
     "build": "export NODE_ENV=development; webpack serve",
-    "dev": "concurrently \"export NODE_ENV=development; webpack serve\" \"nodemon ./server/server.js\"",
+    "dev": "concurrently \"export NODE_ENV=development; webpack serve\" \"nodemon ./server/server.js\""
   },
   "repository": {
     "type": "git",
