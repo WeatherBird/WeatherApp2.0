@@ -158,9 +158,7 @@ userController.verifyUser = async (req, res, next) => {
   try {
     const queryString =
     `
-    SELECT 
-    username_id, username, password, nickname, email, tos, city, state
-    FROM users
+    SELECT * FROM users
     WHERE username = $1;
     `;
     const params = [username];
@@ -251,7 +249,6 @@ userController.deleteUser = async (req, res, next) => {
 
 // export the userController - controller methods will be properties on the userController object
 module.exports = userController;
-
 
 
 
