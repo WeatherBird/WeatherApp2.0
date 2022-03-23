@@ -63,7 +63,7 @@ const dashboardReducer = (state = initialState, action) => {
         }
 
         case types.ADD_FAVORITE: {
-            const favoriteId = action.payload.data.favorite_id;
+            const favoriteId = action.payload.data.favorite_id; // is this in the response object from API ??
             const favoriteCity = action.payload.data.city;
             const favoriteStateName = action.payload.data.state;
             const favoriteCountry = action.payload.data.country;
@@ -78,11 +78,12 @@ const dashboardReducer = (state = initialState, action) => {
                 country: favoriteCountry,
                 currentTemp: favoriteTemp, 
                 currentAQI: favoriteAirQ, 
-                currentWindSpeed: favoriteWind};
+                currentWindSpeed: favoriteWind
+            };
 
             const newState = {
                 ...state,
-                favorites: state.favorites.concat(favObj)
+                favorites: state.favorites.concat(favObj) // can we .concat an obj onto an array ? .concat accepts arrays
                 };
             
             console.log('updated state: ', newState);

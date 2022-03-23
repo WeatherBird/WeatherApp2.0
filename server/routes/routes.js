@@ -39,18 +39,19 @@ userRouter.post('/location/:username', userController.updateUserLocation, (req, 
 
 //add favorite to user profile - PUT
 //return status code 200 if successful
-userRouter.post('/favorites/:userId', userController.addFavorite, userController.returnFavorite, (req, res) => {
+userRouter.post('/setFavorites', userController.addFavorite, userController.returnFavorites, (req, res) => {
   // successful - send back a status of 200 and the user data from the user table
   res.status(200).json(res.locals.favorites);
 });
 
-// get request to a userId paramater - returns the list of favorites associated with the current user
-userRouter.get('/favorites/:userId', userController.returnFavorite, (req, res) => {
-  res.status(200).json(res.locals.favorites);
-});
+// // get request to a userId paramater - returns the list of favorites associated with the current user
+// userRouter.get('/favorites', userController.returnFavorite, (req, res) => {
+//   res.status(200).json(res.locals.favorites);
+// });
 
 // post request to delete a row based on a userId and city and state
-userRouter.delete('/favorites', userController.deleteUser, userController.returnFavorite, (req, res) => {
+// ostrih has not loked into this
+userRouter.delete('/delete_favorite', userController.deleteUser, userController.returnFavorites, (req, res) => {
   res.status(200).json(res.locals.favorites);
 });
 
