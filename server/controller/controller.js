@@ -185,6 +185,9 @@ userController.verifyUser = async (req, res, next) => {
   }
 }
 
+
+
+
 // returning the favorites list associated with a user after inserting a new favorite
 userController.returnFavorite = async (req, res, next) => {
   console.log('WE ARE RETURNING THE FAVORITES!');
