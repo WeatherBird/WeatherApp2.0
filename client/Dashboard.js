@@ -38,24 +38,29 @@ const mapDispatchToProps = dispatch => ({
 
 const Dashboard = (props) => {
 
+  console.log('PROPS: ', props);
+
   const addToFavorites = () => {
-    fetch('/server', {
+    fetch('/setFavorites', {    //determine where to send after setting up backend routes in controller
         method: 'POST',
         body: JSON.stringify({
-            userId: props.username_id,
+            userId: props.userId, // changed this from props.username_id, that wasnt a valid prop
             city: props.city,
-            state: props.state,
+            state: props.stateName,
+            country: props.country
         })
     })
     .then(data => data.json())
     .then(data => {
-        console.log(data)
+        console.log("DATA: ", data) // <<<<<<<---------- we want to seee this
         //invoke dispatch here
         props.dispatchAddFavorite(data)
         // apiCall()
     })
     .catch(error => console.log('error: ', error))
-  }
+  } //addToFavorites
+
+
   // iterate through array of favorites from the state
   const favComponents = [];
 

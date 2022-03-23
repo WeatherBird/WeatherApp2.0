@@ -124,33 +124,42 @@ userController.updateUserLocation = async (req, res, next) => {
 // insert new favorite into favorites table - associated 
 userController.addFavorite = async (req, res, next) => {
   console.log('WE ARE ADDING FAVORITE LOCATION');
-  const { userId } = req.params;
-  const { city, state } = req.body;
+  console.log('REQUEST IS ', req.body)
+  //const { userId } = req.params;
+  const { userId, city, state, country } = req.body; //
   try {
-    const queryString =
-    `
-    INSERT INTO favorites (city, state, username_id)
-    VALUES ($1, $2, $3);
-    `;
+    const queryString = `INSERT INTO favorites (username_id, city, state, country)
+    VALUES ($1, $2, $3, $4);`;
 
     // WHERE username_id = $3;
 
-    const params = [ city, state, userId ]
+    const params = [ userId, city, state, country ]
+    console.log("PARAMS ", params);
     const result = await db.query(queryString, params);
     // console.log('Result: ', result);
     // // store 
     // console.log(result.rows);
     // res.locals.favoriteLocation = result.rows[0];
     // console.log("res.locals.updatedLocation" + res.locals.favoriteLocation)
-    next();
+    return next();
   }
   catch (err) {
-    next({
-      log: `userController.favoriteLocation ERROR: ${err}`,
-      message: { err: 'Error occured in userController.favoriteLocation'}
+    return next({
+      log: `userController.setFavorites ERROR: ${err}`,
+      message: { err: 'Error occured in userController.setFavorite'}
     })
   }
 }
+
+/* 
+[
+    {
+        "favorite_id": 25,
+        "city": "Portland",
+        "state": "Oregon"
+    }
+]
+*/
 
 userController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
@@ -189,10 +198,10 @@ userController.verifyUser = async (req, res, next) => {
 
 
 // returning the favorites list associated with a user after inserting a new favorite
-userController.returnFavorite = async (req, res, next) => {
+userController.returnFavorites = async (req, res, next) => {
   console.log('WE ARE RETURNING THE FAVORITES!');
-  let { userId } = req.params;
-  if (!userId) userId = req.body.username_id;
+
+  const { userId } = req.body;
   try {
     const queryString =
     `
@@ -205,12 +214,12 @@ userController.returnFavorite = async (req, res, next) => {
     const result = await db.query(queryString, params);
 
     // console.log('Resulut: ', result);
-    res.locals.favorites = result.rows;
-
-    next();
+    res.locals.favorites = result.rows; // all favorites for that user
+    console.log();
+    return next();
   }
   catch (err) {
-    next({
+    return next({
       log: `userController.returnFavorites ERROR: ${err}`,
       message: { err: 'Error occured in userController.favoriteLocation'}
     })
