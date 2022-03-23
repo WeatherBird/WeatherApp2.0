@@ -3,7 +3,7 @@ import '../styles/SearchBar.css';
 
 
 const apiCall = (city, state, country, dispatchSearchLocation) => {
-    fetch(`http://api.airvisual.com/v2/city?city=${city}&state=${state}&country=${country}&key=${process.env.API_KEY}`)
+    fetch(`http://api.airvisual.com/v2/city?city=${city}&state=${state}&country=${country}&key=2e5b896a-c496-4143-b954-2a9c38616e29`)
     .then(data => data.json())
     .then((data) => {
         console.log('data: ', data)

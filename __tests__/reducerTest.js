@@ -51,25 +51,87 @@ describe('Dashboard Reducer', () => {
     const action = {
       type: 'SEARCH_LOCATION',
       payload: {
-        city: 'St. Louis', 
-        stateName: 'Missouri', 
-        country: 'USA',
-        currentTemp: '75deg F', 
-        currentAQI: '20', 
-        currentWindSpeed: '2mph',
+        "data": 
+        {
+          "city":"Mission Canyon",
+          "state":"California",
+          "country":"USA",
+          "location":
+          {
+            "type":"Point",
+            "coordinates":[-119.71291,34.45083]},
+            "current":
+            {
+              "weather":
+              {
+                "ts":"2022-03-23T17:00:00.000Z",
+                "tp":25,
+                "pr":1023,
+                "hu":39,
+                "ws":2.68,
+                "wd":139,
+                "ic":"01d"
+              },
+            "pollution":
+            {
+              "ts":"2022-03-23T17:00:00.000Z",
+              "aqius":19,
+              "mainus":"p2",
+              "aqicn":6,
+              "maincn":"p2"
+            }
+          }
+        }
       }
     
     }
     
     it('should return a different city, stateName, country, temp, airQ, wind', () => {
         const { city, stateName, country, currentTemp, currentAQI, currentWindSpeed } = subject(state, action);
-        expect(city).toEqual('St. Louis');
-        expect(stateName).toEqual('Missouri');
+        expect(city).toEqual('Mission Canyon');
+        expect(stateName).toEqual('California');
         expect(country).toEqual('USA');
-        expect(currentTemp).toEqual('75deg F');
-        expect(currentAQI).toEqual('20');
-        expect(currentWindSpeed).toEqual('2mph');
+        expect(currentTemp).toEqual(25);
+        expect(currentAQI).toEqual(19);
+        expect(currentWindSpeed).toEqual(2.68);
     })
   });
 
 });
+/*
+
+{"status":"success",
+  "data": 
+  {
+    "city":"Mission Canyon",
+    "state":"California",
+    "country":"USA",
+    "location":
+    {
+      "type":"Point",
+      "coordinates":[-119.71291,34.45083]},
+      "current":
+      {
+        "weather":
+        {
+          "ts":"2022-03-23T17:00:00.000Z",
+          "tp":25,
+          "pr":1023,
+          "hu":39,
+          "ws":2.68,
+          "wd":139,
+          "ic":"01d"
+        },
+      "pollution":
+      {
+        "ts":"2022-03-23T17:00:00.000Z",
+        "aqius":19,
+        "mainus":"p2",
+        "aqicn":6,
+        "maincn":"p2"
+      }
+    }
+  }
+}
+
+*/
