@@ -9,7 +9,7 @@ const saltRounds = 10;
 //check to see if they exist or will SQL handle this ba res, next) => {
 userController.createUser = async (req, res, next) => {  
   // get values - username and password - from the req object and store in variables
-  const { username, password, nickname, email, tos } = req.body;
+  const { username, password, nickname, email, tos, city, state, country } = req.body;
   // query string to query our sql database
   // use INSERT to add a new user into our users table
   // declare a new variable to be the encryptedPassword
@@ -17,13 +17,13 @@ userController.createUser = async (req, res, next) => {
   try {
     const queryString =
     `
-    INSERT INTO users (username, password, nickname, email, tos)
-    VALUES ($1, $2, $3, $4, $5) 
+    INSERT INTO users (username, password, nickname, email, tos, city, state, country)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
     RETURNING *;
     `;
     // paramaters that need arguments: (username, password)
     // $1 represents username, $2 represents password when passing in arguments to query string using params label
-    const params = [ username, encryptedPassword, nickname, email, tos];
+    const params = [ username, encryptedPassword, nickname, email, tos, city, state, country];
     const result = await db.query(queryString, params);
     res.locals.newUser = result.rows[0];
     next ();
