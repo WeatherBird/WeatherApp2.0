@@ -5,10 +5,10 @@
   "main": "./client/index.js",
   "scripts": {
     "start": "node ./server/server.js",
-    "test": "jest",
+    "test": "jest --verbose",
     "prod": "export NODE_ENV=production; webpack serve",
     "build": "export NODE_ENV=development; webpack serve",
-    "dev": "concurrently \"export NODE_ENV=development; webpack serve\" \"nodemon ./server/server.js\"",
+    "dev": "concurrently \"export NODE_ENV=development; webpack serve\" \"nodemon ./server/server.js\""
   },
   "repository": {
     "type": "git",

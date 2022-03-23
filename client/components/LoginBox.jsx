@@ -84,7 +84,7 @@ class LoginBox extends Component {
           // defaulting country to usa
           // the api call below should ideally use the user's IP address to find their nearest location
           // if (data.city !== null) apiCall(data.city, data.state, 'USA', this.props.dispatchSearchLocation);
-          fetch(`http://api.airvisual.com/v2/nearest_city?key=${process.env.API_KEY}`)
+          fetch(`http://api.airvisual.com/v2/nearest_city?key=2e5b896a-c496-4143-b954-2a9c38616e29`)
             .then(data => data.json())
             .then((data) => {
               console.log('data: ', data);
