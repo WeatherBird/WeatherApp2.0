@@ -257,7 +257,7 @@ userController.returnFavorites = async (req, res, next) => {
     const result = await db.query(queryString, params);
 
     // console.log('Resulut: ', result);
-    res.locals.favorites = result.rows; // all favorites for that user
+    res.locals.favorites = result.rows[result.rows.length-1]; // all favorites for that user
     console.log();
     return next();
   }

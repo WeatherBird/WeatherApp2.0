@@ -6,6 +6,7 @@ import CurrentWeather from './components/CurrentWeather.jsx';
 import './styles/Dashboard.css';
 import RemoveFavButton from './components/RemoveFavButton.jsx';
 import FavWeather from './components/FavWeather.jsx';
+import { Navigate } from 'react-router-dom'
 
 const mapStateToProps = state => { 
     //redux state
@@ -63,6 +64,8 @@ const Dashboard = (props) => {
         }
         // props.dispatchAddFavorite(lastFav)
         // apiCall()
+        //
+        // return <Navigate to="/dashboard" />
     })
     .catch(error => console.log('error: ', error))
   } //addToFavorites
