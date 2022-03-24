@@ -1,6 +1,7 @@
 const db = require('../model');
 // require in bcrypt
 const bcrypt = require('bcrypt');
+const { resourceLimits } = require('worker_threads');
 //declare variable for user controller
 const userController = {};
 // declare a variable assigned to the value of how many saltRounds we want to have in our encryption algorithm
@@ -9,7 +10,7 @@ const saltRounds = 10;
 //check to see if they exist or will SQL handle this ba res, next) => {
 userController.createUser = async (req, res, next) => {  
   // get values - username and password - from the req object and store in variables
-  const { username, password, nickname, email, tos } = req.body;
+  const { username, password, nickname, email, tos, city, state, country } = req.body;
   // query string to query our sql database
   // use INSERT to add a new user into our users table
   // declare a new variable to be the encryptedPassword
@@ -17,13 +18,13 @@ userController.createUser = async (req, res, next) => {
   try {
     const queryString =
     `
-    INSERT INTO users (username, password, nickname, email, tos)
-    VALUES ($1, $2, $3, $4, $5) 
+    INSERT INTO users (username, password, nickname, email, tos, city, state, country)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
     RETURNING *;
     `;
     // paramaters that need arguments: (username, password)
     // $1 represents username, $2 represents password when passing in arguments to query string using params label
-    const params = [ username, encryptedPassword, nickname, email, tos];
+    const params = [ username, encryptedPassword, nickname, email, tos, city, state, country];
     const result = await db.query(queryString, params);
     res.locals.newUser = result.rows[0];
     next ();
@@ -167,9 +168,7 @@ userController.verifyUser = async (req, res, next) => {
   try {
     const queryString =
     `
-    SELECT 
-    username_id, username, password, nickname, email, tos, city, state
-    FROM users
+    SELECT * FROM users
     WHERE username = $1;
     `;
     const params = [username];
@@ -183,8 +182,11 @@ userController.verifyUser = async (req, res, next) => {
     if (!match) {
       throw new SyntaxError('Incorrect Password, Please Try Again');
     } 
+    
     // add the found login user row to the res.locals object
     res.locals.foundUser = result.rows[0];
+    //delete the password so it doesnt get sent to frontend
+    res.locals.foundUser.password = null;
     // invoke next to enter the next middleware function
     next();
   }
@@ -195,6 +197,48 @@ userController.verifyUser = async (req, res, next) => {
   })
   }
 }
+
+userController.favoriteList = async (req, res, next) => {
+  //res.locals.foundUser -> add property here 
+  const { username_id } = res.locals.foundUser;
+
+  try {
+    const queryString = `
+    SELECT favorite_id, city, state, country
+    FROM favorites
+    WHERE username_id = $1;
+    `;
+    const params = [ username_id ];
+    const result = await db.query(queryString, params);
+
+    res.locals.foundUser.favorites = result.rows;
+    return next();
+  }
+  catch (err) {
+    return next({
+      log: `userController.favoriteList ERROR: ${err}`,
+      message: { err: 'Error occured in userController.favoriteList'}
+    })
+  }
+}
+
+
+
+/**
+ *  
+[1]   {
+[1]     username_id: 37,
+[1]     username: 'bbb',
+[1]     password: '$2b$10$DsCZ88M9zcImQokhp8bYp.ACvW.HEdP7sZHn/C7W2RwJb5CluAKJS',
+[1]     nickname: 'bbb',
+[1]     email: 'bbb@gmail.com',
+[1]     tos: 'true',
+[1]     city: 'Port Angeles',
+[1]     state: 'Washington',
+[1]     country: 'USA'
+[1]   }
+[1] 
+ */
 
 // returning the favorites list associated with a user after inserting a new favorite
 userController.returnFavorites = async (req, res, next) => {
@@ -260,7 +304,6 @@ userController.deleteUser = async (req, res, next) => {
 
 // export the userController - controller methods will be properties on the userController object
 module.exports = userController;
-
 
 
 

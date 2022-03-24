@@ -28,7 +28,7 @@ class LoginBox extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '', loggedIn: false };
+    this.state = { username: '', loggedIn: false };
     this.onSubmit = this.onSubmit.bind(this);
     // this.sendToSignUp = this.sendToSignUp.bind(this);
   }
@@ -66,33 +66,35 @@ class LoginBox extends Component {
           this.setState({ ...this.state, loggedIn: true });
           // store username in state
           // data.users.username
-          this.props.dispatchUsernameStorage({userId: data.username_id, nickname: data.nickname});
+          this.props.dispatchUsernameStorage({userId: data.username_id, nickname: data.nickname, favorites: data.favorites, city: data.city,
+          state: data.state, country: data.country});
 
           // save returned favorite places array to state
-          fetch(`/user/favorites/${data.username_id}`)
-          .then( response => {
-            const status = response.status;
-            return response.json();
-          })
-          .then( data => {
-            this.props.dispatchUpdateFavorites(data);
-            console.log('Favorites data: ', data);
-            // save array of favorite places to state at state.favorites
+          // fetch(`/user/favorites/${data.username_id}`)
+          // .then( response => {
+          //   const status = response.status;
+          //   return response.json();
+          // })
+          // .then( data => {
+          //   this.props.dispatchUpdateFavorites(data);
+          //   console.log('Favorites data: ', data);
+          //   // save array of favorite places to state at state.favorites
             
-          });
+          // });
 
           // defaulting country to usa
           // the api call below should ideally use the user's IP address to find their nearest location
           // if (data.city !== null) apiCall(data.city, data.state, 'USA', this.props.dispatchSearchLocation);
-          fetch(`http://api.airvisual.com/v2/nearest_city?key=${process.env.API_KEY}`)
-            .then(data => data.json())
-            .then((data) => {
-              console.log('data: ', data);
-              // searchForLocation(data)
-              // save the favorites list of this user returned from the backend on a successful login
-              this.props.dispatchSearchLocation(data);
-            })
-            .catch(error => console.log('error in api get request: ', error));
+
+          // fetch(`http://api.airvisual.com/v2/nearest_city?key=2e5b896a-c496-4143-b954-2a9c38616e29`)
+          //   .then(data => data.json())
+          //   .then((data) => {
+          //     console.log('data: ', data);
+          //     // searchForLocation(data)
+          //     // save the favorites list of this user returned from the backend on a successful login
+          //     this.props.dispatchSearchLocation(data);
+          //   })
+          //   .catch(error => console.log('error in api get request: ', error));
         }
         else alert('Login error');
       });
