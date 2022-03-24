@@ -50,35 +50,44 @@ const dashboardReducer = (state = initialState, action) => {
         console.log('updated state: ', newState)
         return newState
         }
-
+        //sarah and ammar did store_userinfo
         case types.STORE_USERINFO: {
             console.log('Payload: ', action.payload);
-            const {userId, nickname } = action.payload;
-
+            const {userId, nickname, city, state, country, favorites } = action.payload;
+            console.log(state);
             return {
                 ...state,
                 userId,
-                nickname
+                nickname,
+                city,
+                state,
+                country,
+                favorites
             }
         }
 
         case types.ADD_FAVORITE: {
-            const favoriteId = action.payload.data.favorite_id; // is this in the response object from API ??
-            const favoriteCity = action.payload.data.city;
-            const favoriteStateName = action.payload.data.state;
-            const favoriteCountry = action.payload.data.country;
-            const favoriteTemp = action.payload.data.current.weather.tp;
-            const favoriteAirQ = action.payload.data.current.pollution.aqius;
-            const favoriteWind = action.payload.data.current.weather.ws;
+            console.log("reducerPL: ", action.payload);
+            const favoriteId = action.payload.favorite_id; // is this in the response object from API ??
+            const favoriteCity = action.payload.city;
+            const favoriteStateName = action.payload.state;
+            // const favoriteCountry = action.payload.data.country;
+            // const favoriteTemp = action.payload.data.current.weather.tp;
+            // const favoriteAirQ = action.payload.data.current.pollution.aqius;
+            // const favoriteWind = action.payload.data.current.weather.ws;
 
             const favObj = {
                 id: favoriteId,
                 city: favoriteCity, 
                 stateName: favoriteStateName, 
-                country: favoriteCountry,
-                currentTemp: favoriteTemp, 
-                currentAQI: favoriteAirQ, 
-                currentWindSpeed: favoriteWind
+                // country: favoriteCountry,
+                // currentTemp: favoriteTemp, 
+                // currentAQI: favoriteAirQ, 
+                // currentWindSpeed: favoriteWind
+                country: "USA",
+                currentTemp: 42, 
+                currentAQI: 22, 
+                currentWindSpeed: 22
             };
 
             const newState = {
@@ -109,10 +118,20 @@ const dashboardReducer = (state = initialState, action) => {
             };
             return newState;
         }
-
+        //we are updating our current weather info for our favorites
         case types.UPDATE_FAVORITES: {
+            /*
+                const dispatchData = {
+                    temp: data.data.current.weather.tp,
+                    aqi: data.data.current.pollution.aqius,
+                    wind: data.data.current.weather.ws,
+                    index: i
+                };
+            */
             const userFavorites = action.payload;
-
+                // // let upFav = {
+                    // aqi: action.payload.aqi
+                // }
             return {
                 ...state, 
                 favorites: userFavorites

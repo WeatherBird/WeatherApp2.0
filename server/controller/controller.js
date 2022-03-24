@@ -146,7 +146,7 @@ userController.addFavorite = async (req, res, next) => {
   }
   catch (err) {
     return next({
-      log: `userController.setFavorites ERROR: ${err}`,
+      log: `userController.addFavorites ERROR: ${err}`,
       message: { err: 'Error occured in userController.setFavorite'}
     })
   }

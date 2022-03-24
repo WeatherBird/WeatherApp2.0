@@ -34,15 +34,17 @@ const mapDispatchToProps = dispatch => ({
     }
 
 });
-  
 
 const Dashboard = (props) => {
 
   console.log('PROPS: ', props);
 
   const addToFavorites = () => {
-    fetch('/setFavorites', {    //determine where to send after setting up backend routes in controller
+    fetch('/user/setFavorites', {    //determine where to send after setting up backend routes in controller
         method: 'POST',
+        headers:{
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             userId: props.userId, // changed this from props.username_id, that wasnt a valid prop
             city: props.city,
@@ -52,15 +54,28 @@ const Dashboard = (props) => {
     })
     .then(data => data.json())
     .then(data => {
-        console.log("DATA: ", data) // <<<<<<<---------- we want to seee this
+        console.log("57 DATA: ", data) // <<<<<<<---------- we want to seee this
         //invoke dispatch here
-        props.dispatchAddFavorite(data)
+        // use a for loop to iterate thru data and pass to dispAddFav on each iter
+        //let lastFav = data[data.length - 1];
+        for (let i = 0; i < data.length; i++) {
+          props.dispatchAddFavorite(data[i]);
+        }
+        // props.dispatchAddFavorite(lastFav)
         // apiCall()
     })
     .catch(error => console.log('error: ', error))
   } //addToFavorites
 
-
+/* 
+[
+    {
+        "favorite_id": 25,
+        "city": "Portland",
+        "state": "Oregon"
+    }
+]
+*/
   // iterate through array of favorites from the state
   const favComponents = [];
 
@@ -88,7 +103,8 @@ const Dashboard = (props) => {
         wind: data.data.current.weather.ws,
         index: i
       };
-      // append a component to the favComponents
+      //pass dispacth data to userFavorites
+      // use index to figure out which element of favorites[] to update with weather
       // this.props.dispatchUpdateFavorites()
     })
     .catch(error => console.log('error with api fetch (favorites): ', error));
@@ -103,7 +119,7 @@ const Dashboard = (props) => {
       <CurrentWeather username={props.username} city={props.city} state={props.state} country={props.country} currentTemp={props.currentTemp} currentAQI={props.currentAQI} currentWindSpeed={props.currentWindSpeed} />
       <button id='setFavorite' onClick={addToFavorites}>Add To Favorites</button>
 
-      {favComponents}
+      {favComponents} 
 
     </div>
   )
