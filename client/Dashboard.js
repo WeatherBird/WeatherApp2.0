@@ -58,10 +58,10 @@ const Dashboard = (props) => {
         //invoke dispatch here
         // use a for loop to iterate thru data and pass to dispAddFav on each iter
         //let lastFav = data[data.length - 1];
-        for (let i = 0; i < data.length; i++) {
-          props.dispatchAddFavorite(data[i]);
-        }
-        // props.dispatchAddFavorite(lastFav)
+        // for (let i = 0; i < data.length; i++) {
+        //   props.dispatchAddFavorite(data[i]);
+        // }
+        props.dispatchAddFavorite(data)
         // apiCall()
     })
     .catch(error => console.log('error: ', error))
