@@ -6,6 +6,7 @@ import CurrentWeather from './components/CurrentWeather.jsx';
 import './styles/Dashboard.css';
 import RemoveFavButton from './components/RemoveFavButton.jsx';
 import FavWeather from './components/FavWeather.jsx';
+import { Navigate } from 'react-router-dom'
 
 const mapStateToProps = state => { 
     //redux state
@@ -63,11 +64,14 @@ const Dashboard = (props) => {
         }
         // props.dispatchAddFavorite(lastFav)
         // apiCall()
+        //
+        // return <Navigate to="/dashboard" />
     })
     .catch(error => console.log('error: ', error))
   } //addToFavorites
 
 /* 
+this is favorites
 [
     {
         "favorite_id": 25,
@@ -83,32 +87,33 @@ const Dashboard = (props) => {
 
   for (let i = 0; i < props.favorites.length; i++) {
     const favoritePlace = props.favorites[i] // <- current favorite {city: '' , state: ''}
-    favComponents.push(<FavWeather city={favoritePlace.city} favPlaceIndex={i}/>);
+    favComponents.push(<FavWeather favoritePlace={favoritePlace} favPlaceIndex={i} key={i}/>);
     favComponents.push(<RemoveFavButton removeId={favoritePlace.id} />);
     // currentAQI currentTemp currentWindSpeed
   }
 
   console.log('favComponents: ', favComponents);
+  console.log('CODESMITH BLAHAHAHA ', props.favorites)
 
-  for (let i = 0; i< props.favorites.length; i++) {
-    const favoritePlace = props.favorites[i] // <- current favorite {city: '' , state: ''}
-    fetch(`http://api.airvisual.com/v2/city?city=${favoritePlace.city}&state=${favoritePlace.state}&country=USA&key=${process.env.API_KEY}`)
-    .then(data => data.json())
-    .then((data) => {
-      console.log('data: ', data);
-      // we need to update state with API fetch results here
-      const dispatchData = {
-        temp: data.data.current.weather.tp,
-        aqi: data.data.current.pollution.aqius,
-        wind: data.data.current.weather.ws,
-        index: i
-      };
-      //pass dispacth data to userFavorites
-      // use index to figure out which element of favorites[] to update with weather
-      // this.props.dispatchUpdateFavorites()
-    })
-    .catch(error => console.log('error with api fetch (favorites): ', error));
-  }
+  // for (let i = 0; i< props.favorites.length; i++) {
+  //   const favoritePlace = props.favorites[i] // <- current favorite {city: '' , state: ''}
+  //   fetch(`http://api.airvisual.com/v2/city?city=${favoritePlace.city}&state=${favoritePlace.state}&country=USA&key=${process.env.API_KEY}`)
+  //   .then(data => data.json())
+  //   .then((data) => {
+  //     console.log('data: ', data);
+  //     // we need to update state with API fetch results here
+  //     const dispatchData = {
+  //       temp: data.data.current.weather.tp,
+  //       aqi: data.data.current.pollution.aqius,
+  //       wind: data.data.current.weather.ws,
+  //       index: i
+  //     };
+  //     //pass dispacth data to userFavorites
+  //     // use index to figure out which element of favorites[] to update with weather
+  //     // this.props.dispatchUpdateFavorites()
+  //   })
+  //   .catch(error => console.log('error with api fetch (favorites): ', error));
+  // }
   // make api request with each favorite location -> take the results from that api response
   // drill it down to -> create instances of components displaying weather info for each fav place
   return (

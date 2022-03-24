@@ -45,7 +45,7 @@ userRouter.post('/setFavorites', userController.addFavorite, userController.retu
 });
 
 // // get request to a userId paramater - returns the list of favorites associated with the current user
-// userRouter.get('/favorites', userController.returnFavorite, (req, res) => {
+// userRouter.get('/favorites', userController.returnFavorites, (req, res) => {
 //   res.status(200).json(res.locals.favorites);
 // });
 

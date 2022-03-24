@@ -120,14 +120,7 @@ const dashboardReducer = (state = initialState, action) => {
         }
         //we are updating our current weather info for our favorites
         case types.UPDATE_FAVORITES: {
-            /*
-                const dispatchData = {
-                    temp: data.data.current.weather.tp,
-                    aqi: data.data.current.pollution.aqius,
-                    wind: data.data.current.weather.ws,
-                    index: i
-                };
-            */
+           
             const userFavorites = action.payload;
                 // // let upFav = {
                     // aqi: action.payload.aqi
@@ -137,12 +130,21 @@ const dashboardReducer = (state = initialState, action) => {
                 favorites: userFavorites
             }
         }
-		
+		//aka apiAppendFavs
         case types.API_FAVORITES: {
-            const apiData = action.payload;
+             /*
+                const dispatchData = {
+                    temp: data.data.current.weather.tp,
+                    aqi: data.data.current.pollution.aqius,
+                    wind: data.data.current.weather.ws,
+                    index: props.favPlaceIndex,
+                    
+                };
+            */
+            const apiData = action.payload; // dispatchData
 
-            const newFavorites = JSON.parse(JSON.stringify(state.favorites));
-
+            const newFavorites = JSON.parse(JSON.stringify(state.favorites)); // creating a deep copy of fav array
+            
             newFavorites[apiData.index].currentTemp = apiData.temp;// currentAQI currentWindSpeed
             newFavorites[apiData.index].currentAQI = apiData.aqi;
 			newFavorites[apiData.index].currentWindSpeed = apiData.wind;
