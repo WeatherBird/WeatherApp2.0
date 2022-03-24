@@ -22,31 +22,51 @@ class SignupBox extends Component{
       email: event.target.email.value,
       tos: String(event.target.tos.checked)
     };
+
+    fetch(`http://api.airvisual.com/v2/nearest_city?key=2e5b896a-c496-4143-b954-2a9c38616e29`)
+      .then(data => data.json())
+      .then((data) => {
+        console.log('data: ', data);
+        // searchForLocation(data)
+        signupObject.state = data.data.state;
+        signupObject.city = data.data.city;
+        signupObject.country = data.data.country;
+        console.log('updated obj', signupObject)
+
+        fetch(url, { // <- returns a response asynchronously
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          // mode: 'no-cors',
+          // credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          redirect: 'follow', // manual, *follow, error
+          body: JSON.stringify(signupObject) // body data type must match "Content-Type" header
+        })
+        .then((response) => {
+          if (response.status !== 200) {
+            // console.log(response);
+            console.log('Signup Error');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.err) {
+            if (data.err.code === 11000) alert('Username taken');
+            else alert('Sign-up error!');
+            return;
+          } else alert('Sign-up successful');
+        });
+        
+      })
+      .catch(error => console.log('error in api get request: ', error));
+
+    
+
+
+
+
     // console.log(`the signup object looks like: ${JSON.stringify(signupObject)}`);
-    fetch(url, { // <- returns a response asynchronously
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      // mode: 'no-cors',
-      // credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow', // manual, *follow, error
-      body: JSON.stringify(signupObject) // body data type must match "Content-Type" header
-    })
-    .then((response) => {
-      if (response.status !== 200) {
-        // console.log(response);
-        console.log('Signup Error');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data.err) {
-        if (data.err.code === 11000) alert('Username taken');
-        else alert('Sign-up error!');
-        return;
-      } else alert('Sign-up successful');
-    });
   }
 
   render(){
