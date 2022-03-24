@@ -276,7 +276,7 @@ userController.returnFavorites = async (req, res, next) => {
 //     WHERE favorite_id = 8;
 
 // receives an id, city, and state and deletes that from the favorites table
-userController.deleteUser = async (req, res, next) => {
+userController.deleteFav = async (req, res, next) => {
   // destructure the variables on the request body
   const { favorite_id } = req.body;
   console.log('Body: ', req.body);
@@ -287,12 +287,14 @@ userController.deleteUser = async (req, res, next) => {
     WHERE favorite_id = $1;
     `;
 
-    const params = [favorite_id];
+    const params = [ favorite_id ];
     console.log('Params: ', params[0]);
     const result = await db.query(queryString, params);
     console.log('Delete Result: ', result);
     // invoke the next middleware function which will return the new favorites
-    next();
+    res.locals.response = {}
+    res.locals.response.favorites_id = favorite_id;
+    return next();
   }
   catch (err) {
     next({

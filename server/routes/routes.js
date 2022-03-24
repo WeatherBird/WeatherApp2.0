@@ -51,8 +51,8 @@ userRouter.post('/setFavorites', userController.addFavorite, userController.retu
 
 // post request to delete a row based on a userId and city and state
 // ostrih has not loked into this
-userRouter.delete('/delete_favorite', userController.deleteUser, userController.returnFavorites, (req, res) => {
-  res.status(200).json(res.locals.favorites);
+userRouter.delete('/delete_favorite', userController.deleteFav, (req, res) => {
+  res.status(200).json(res.locals.response);
 });
 
 

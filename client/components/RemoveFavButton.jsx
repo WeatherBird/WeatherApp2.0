@@ -15,9 +15,9 @@ const mapDispatchToProps = dispatch => ({
 const RemoveFavButton = (props) => {
   // props.removeId <- this holds the id to remove
   // props.userId <- this holds the current user's id
-  const removeObj = {username_id: props.userId, favorite_id: props.removeId};
+  const removeObj = {favorite_id: props.removeId};
   const removeFavorite = (event) => {
-    fetch('/server', {
+    fetch('/user/delete_favorite', {
       method: 'DELETE', 
       headers: {
         'Content-Type': 'application/json'
@@ -29,6 +29,7 @@ const RemoveFavButton = (props) => {
       if (response.status == 200) {
         // remove the city from the favorites array in the state
         //add dispatch here
+        console.log('WE MADE IT')
         this.props.dispatchDeleteFavorite(data.favorites_id);
       }
     })

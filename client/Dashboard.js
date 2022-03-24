@@ -88,12 +88,12 @@ this is favorites
   for (let i = 0; i < props.favorites.length; i++) {
     const favoritePlace = props.favorites[i] // <- current favorite {city: '' , state: ''}
     favComponents.push(<FavWeather favoritePlace={favoritePlace} favPlaceIndex={i} key={i}/>);
-    favComponents.push(<RemoveFavButton removeId={favoritePlace.id} />);
+    favComponents.push(<RemoveFavButton removeId={favoritePlace.favorite_id} />);
     // currentAQI currentTemp currentWindSpeed
   }
 
-  console.log('favComponents: ', favComponents);
-  console.log('CODESMITH BLAHAHAHA ', props.favorites)
+  // console.log('favComponents: ', favComponents);
+  // console.log('CODESMITH BLAHAHAHA ', props.favorites)
 
   // for (let i = 0; i< props.favorites.length; i++) {
   //   const favoritePlace = props.favorites[i] // <- current favorite {city: '' , state: ''}

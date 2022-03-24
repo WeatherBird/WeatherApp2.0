@@ -93,8 +93,9 @@ const FavWeather = (props) => {
         // !props.favorites[props.favPlaceIndex].currentTemp ? null : 
         <div id='currentweather'>
             <ol>
-                <li className="weatherlist city">City: {`${favoritePlace.city}`} </li> 
-                <li className="weatherlist city">State: {`${favoritePlace.state}`} </li> 
+                <li className="weatherlist city">{`${favoritePlace.city}`} </li> 
+                <li className="weatherlist city">{`${favoritePlace.state}, ${favoritePlace.country}`} </li> 
+                {/* <li className="weatherlist city">State: {`${favoritePlace.state}`} </li>  */}
                 <li className="weatherlist">Temperature: {`${(props.favorites[props.favPlaceIndex].currentTemp * 9/5) + 32} °F`} </li>
                 <li className="weatherlist">Air Quality Index: {props.favorites[props.favPlaceIndex].currentAQI}</li> 
                 <li className="weatherlist">Wind Speed: {`${props.favorites[props.favPlaceIndex].currentWindSpeed} m/s`}</li>
