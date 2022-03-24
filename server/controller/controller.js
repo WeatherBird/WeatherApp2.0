@@ -1,6 +1,7 @@
 const db = require('../model');
 // require in bcrypt
 const bcrypt = require('bcrypt');
+const { resourceLimits } = require('worker_threads');
 //declare variable for user controller
 const userController = {};
 // declare a variable assigned to the value of how many saltRounds we want to have in our encryption algorithm
@@ -181,8 +182,11 @@ userController.verifyUser = async (req, res, next) => {
     if (!match) {
       throw new SyntaxError('Incorrect Password, Please Try Again');
     } 
+    
     // add the found login user row to the res.locals object
     res.locals.foundUser = result.rows[0];
+    //delete the password so it doesnt get sent to frontend
+    res.locals.foundUser.password = null;
     // invoke next to enter the next middleware function
     next();
   }
@@ -194,8 +198,47 @@ userController.verifyUser = async (req, res, next) => {
   }
 }
 
+userController.favoriteList = async (req, res, next) => {
+  //res.locals.foundUser -> add property here 
+  const { username_id } = res.locals.foundUser;
+
+  try {
+    const queryString = `
+    SELECT favorite_id, city, state, country
+    FROM favorites
+    WHERE username_id = $1;
+    `;
+    const params = [ username_id ];
+    const result = await db.query(queryString, params);
+
+    res.locals.foundUser.favorites = result.rows;
+    return next();
+  }
+  catch (err) {
+    return next({
+      log: `userController.favoriteList ERROR: ${err}`,
+      message: { err: 'Error occured in userController.favoriteList'}
+    })
+  }
+}
 
 
+
+/**
+ *  
+[1]   {
+[1]     username_id: 37,
+[1]     username: 'bbb',
+[1]     password: '$2b$10$DsCZ88M9zcImQokhp8bYp.ACvW.HEdP7sZHn/C7W2RwJb5CluAKJS',
+[1]     nickname: 'bbb',
+[1]     email: 'bbb@gmail.com',
+[1]     tos: 'true',
+[1]     city: 'Port Angeles',
+[1]     state: 'Washington',
+[1]     country: 'USA'
+[1]   }
+[1] 
+ */
 
 // returning the favorites list associated with a user after inserting a new favorite
 userController.returnFavorites = async (req, res, next) => {

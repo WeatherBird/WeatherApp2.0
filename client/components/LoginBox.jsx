@@ -28,7 +28,7 @@ class LoginBox extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: '', password: '', loggedIn: false };
+    this.state = { username: '', loggedIn: false };
     this.onSubmit = this.onSubmit.bind(this);
     // this.sendToSignUp = this.sendToSignUp.bind(this);
   }
@@ -66,7 +66,8 @@ class LoginBox extends Component {
           this.setState({ ...this.state, loggedIn: true });
           // store username in state
           // data.users.username
-          this.props.dispatchUsernameStorage({userId: data.username_id, nickname: data.nickname});
+          this.props.dispatchUsernameStorage({userId: data.username_id, nickname: data.nickname, favorites: data.favorites, city: data.city,
+          state: data.state, country: data.country});
 
           // save returned favorite places array to state
           // fetch(`/user/favorites/${data.username_id}`)
