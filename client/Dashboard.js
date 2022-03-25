@@ -87,8 +87,15 @@ this is favorites
 
   for (let i = 0; i < props.favorites.length; i++) {
     const favoritePlace = props.favorites[i] // <- current favorite {city: '' , state: ''}
-    favComponents.push(<FavWeather favoritePlace={favoritePlace} favPlaceIndex={i} key={i}/>);
-    favComponents.push(<RemoveFavButton removeId={favoritePlace.favorite_id} />);
+    favComponents.push(
+      <div className="card">
+        <FavWeather favoritePlace={favoritePlace} favPlaceIndex={i} key={i}/>
+        <RemoveFavButton removeId={favoritePlace.favorite_id} />
+      </div>
+    )
+
+    // favComponents.push(<FavWeather favoritePlace={favoritePlace} favPlaceIndex={i} key={i}/>);
+    // favComponents.push(<RemoveFavButton removeId={favoritePlace.favorite_id} />);
     // currentAQI currentTemp currentWindSpeed
   }
 
@@ -121,10 +128,12 @@ this is favorites
       <h1>Welcome, {props.nickname}!</h1>
       <SearchBar dispatchSearchLocation={props.dispatchSearchLocation}/>
       <p>Your Forecast:</p>
-      <CurrentWeather username={props.username} city={props.city} state={props.state} country={props.country} currentTemp={props.currentTemp} currentAQI={props.currentAQI} currentWindSpeed={props.currentWindSpeed} />
+      <CurrentWeather username={props.username} city={props.city} state={props.stateName} country={props.country} currentTemp={props.currentTemp} currentAQI={props.currentAQI} currentWindSpeed={props.currentWindSpeed} />
       <button id='setFavorite' onClick={addToFavorites}>Add To Favorites</button>
 
-      {favComponents} 
+      <div className="fav">
+        {favComponents} 
+      </div>
 
     </div>
   )

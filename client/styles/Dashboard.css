@@ -16,3 +16,15 @@
   transition-duration: .3s;
   margin-top: 10px;
 }
+
+.fav{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}

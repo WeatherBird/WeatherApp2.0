@@ -1,6 +1,7 @@
 /* body {
   background: linear-gradient(0deg, rgb(255, 255, 243) 0%, rgb(126, 157, 243) 88%);
 } */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap');
 
 .city {
   font-size: 25px;
@@ -11,13 +12,91 @@ ol {
   list-style: none;
 }
 
-#currentweather {
+/* #currentweather {
   margin-top: 30px;
   display: flex;
   margin-left: 15px;
   border: 1px black solid;
   padding: 10px;
   list-style: none;
+} */
+
+.green {
+  background-color: rgb(116, 187, 116) !important;
+  margin-top: 30px;
+  display: flex;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
+  font-family: 'Nunito', sans-serif;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(22, 21, 21, 0.345);
+}
+
+.yellow {
+  background-color: rgb(238, 238, 141);
+  margin-top: 30px;
+  display: flex;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
+  font-family: 'Nunito', sans-serif;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(22, 21, 21, 0.345);
+}
+
+.orange {
+  background-color: rgb(238, 193, 108);
+  margin-top: 30px;
+  display: flex;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
+  font-family: 'Nunito', sans-serif !important;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(22, 21, 21, 0.345);
+}
+
+.red {
+  background-color: rgb(221, 119, 119);
+  margin-top: 30px;
+  display: flex;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
+  font-family: 'Nunito';
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(22, 21, 21, 0.345);
+}
+
+.purple {
+  background-color: rgb(185, 110, 185);
+  margin-top: 30px;
+  display: flex;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
+  font-family: 'Nunito';
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(22, 21, 21, 0.345);
+}
+
+.brown {
+  background-color: rgb(151, 79, 79);
+  margin-top: 30px;
+  display: flex;
+  margin-left: 15px;
+  border: 1px black solid;
+  padding: 10px;
+  list-style: none;
+  font-family: 'Nunito';
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px rgba(22, 21, 21, 0.345);
 }
 
 .weatherlist {
