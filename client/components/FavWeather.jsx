@@ -45,10 +45,29 @@ const FavWeather = (props) => {
     // console.log('props.favorites: ', props.favorites);
     // const currentFavoritePlace = props.favorites[favPlaceIndex];
     // console.log('currentFavoritePlace: ', currentFavoritePlace);
-    if (props.currentAQI > 50) {
-        badPollution = true;
-    }
+    
 
+    const getAQIColor = (aqi) => {
+        if (aqi > 0 && aqi < 50) {
+            return 'green';
+        }
+        if (aqi >= 50 && aqi < 100) {
+            return 'yellow';
+        }
+        if (aqi >= 100 && aqi < 150) {
+            return 'orange';
+        }
+        if (aqi >= 150 && aqi < 200) {
+            return 'red';
+        }
+        if (aqi >= 200 && aqi < 300 ) {
+            return 'purple';
+        }
+        if (aqi >= 300 && aqi < 500) {
+            return 'brown';
+        }
+    }
+ 
 
     const favoritePlace = props.favoritePlace; // <- current favorite {city: '' , state: ''}
     ///(
@@ -67,35 +86,29 @@ const FavWeather = (props) => {
             index: props.favPlaceIndex
             };
 
-            // if (dispatchData.aqi > 50) {
-            //     dispatchData.pollution = true;
-            // }
-        
-
-
             props.dispatchApiAppendFavs(dispatchData);
 
             console.log('DISPATCH DATA: ', dispatchData);
-            // let badPollution = false;
-
-            // if (dispatchData.aqi > 50) {
-            //     badPollution = true;
-            // }
-
             //pass dispacth data to userFavorites
             // use index to figure out which element of favorites[] to update with weather
             // this.props.dispatchUpdateFavorites()
         })
         .catch(error => console.log('error with api fetch (favorites): ', error));
     }
-    console.log('WE ARE LOOKING FOR PROPS:', props.favorites[props.favPlaceIndex].currentTemp);
+
+    const color = getAQIColor(props.favorites[props.favPlaceIndex].currentAQI);
+    // console.log('COLOR IS: ', color);
+
+    if (props.favorites[props.favPlaceIndex].currentAQI > 50) {
+        badPollution = true;
+    }
+
     return (
         // !props.favorites[props.favPlaceIndex].currentTemp ? null : 
-        <div id='currentweather'>
+        <div className={color}>
             <ol>
                 <li className="weatherlist city">{`${favoritePlace.city}`} </li> 
-                <li className="weatherlist city">{`${favoritePlace.state}, ${favoritePlace.country}`} </li> 
-                {/* <li className="weatherlist city">State: {`${favoritePlace.state}`} </li>  */}
+                <li className="weatherlist-country">{`${favoritePlace.state}, ${favoritePlace.country}`} </li> 
                 <li className="weatherlist">Temperature: {`${(props.favorites[props.favPlaceIndex].currentTemp * 9/5) + 32} °F`} </li>
                 <li className="weatherlist">Air Quality Index: {props.favorites[props.favPlaceIndex].currentAQI}</li> 
                 <li className="weatherlist">Wind Speed: {`${props.favorites[props.favPlaceIndex].currentWindSpeed} m/s`}</li>
