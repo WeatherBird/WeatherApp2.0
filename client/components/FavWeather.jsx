@@ -72,7 +72,7 @@ const FavWeather = (props) => {
     const favoritePlace = props.favoritePlace; // <- current favorite {city: '' , state: ''}
     ///(
     if (!props.favorites[props.favPlaceIndex].currentTemp){
-        fetch(`http://api.airvisual.com/v2/city?city=${favoritePlace.city}&state=${favoritePlace.state}&country=${favoritePlace.country}&key=2e5b896a-c496-4143-b954-2a9c38616e29`)
+        fetch(`http://api.airvisual.com/v2/city?city=${favoritePlace.city}&state=${favoritePlace.state}&country=${favoritePlace.country}&key=46e1ef73-d2e8-42a6-811e-c17a1e960b1f`)
         .then(data => data.json())
         .then((data) => {
             console.log('data: ', data);
@@ -97,7 +97,7 @@ const FavWeather = (props) => {
     }
 
     const color = getAQIColor(props.favorites[props.favPlaceIndex].currentAQI);
-    // console.log('COLOR IS: ', color);
+    console.log('COLOR IS: ', color);
 
     if (props.favorites[props.favPlaceIndex].currentAQI > 50) {
         badPollution = true;

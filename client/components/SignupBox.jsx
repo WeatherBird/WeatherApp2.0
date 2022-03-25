@@ -23,7 +23,7 @@ class SignupBox extends Component{
       tos: String(event.target.tos.checked)
     };
 
-    fetch(`http://api.airvisual.com/v2/nearest_city?key=2e5b896a-c496-4143-b954-2a9c38616e29`)
+    fetch(`http://api.airvisual.com/v2/nearest_city?key=46e1ef73-d2e8-42a6-811e-c17a1e960b1f`)
       .then(data => data.json())
       .then((data) => {
         console.log('data: ', data);
